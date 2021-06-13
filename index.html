@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Appt</title>
+    <style>
+        .radios {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <div>{{greetings}}</div>
+        <div>{{ name }}</div>
+        <button @click="sayHello()">Greet</button>
+        <div>{{declaration}}</div>
+
+        <form class="radio">
+            <div class="radio" v-for="(season, index) in seasons" :key="index">
+                <input :id="index" type="radio" name="season" :value="season" @change="changeSeason(season)" :checked="selectedSeason === season" />
+                <label :for="index">{{season.toUpperCase()}}</label>
+            </div>
+        </form>
+        <div>{{dynamicUtterance}}</div>
+        <input placeholder="town" type="text" v-model="town">
+        <div>{{town}}</div>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        const app = new Vue({
+            el: "#app",
+            props: [],
+            components: {},
+            data: {
+                title: "Product goes here",
+                greetings: "For me",
+                name: "Lillian",
+                selectedSeason: "autumn",
+                seasons: [
+                    "winter",
+                    "summer",
+                    "spring",
+                    "autumn"
+                ],
+                dynamicUtterance: "",
+                town: ""
+
+            },
+            beforeCreated: function() {
+                console.log("runs before app is created")
+
+            },
+            created: function() {
+                console.log("runs when app is created")
+
+            },
+            beforeMount: function() {
+                console.log("runs before app is mounted")
+
+            },
+            mounted: function() {
+                console.log("runs when app is mounted")
+
+            },
+            watch: {
+                name: function(newValue, oldValue) {
+                    this.greetings = `Hi ${oldValue}`;
+                    // console.log("Said hello")
+
+                },
+                selectedSeason: function(newValue, oldValue) {
+                    this.dynamicUtterance = `Hi ${this.name} I loved you in ${oldValue} and i will love you in ${newValue} `;
+                }
+
+            },
+            computed: {
+                declaration: function() {
+                    return `Love you ${this.name}`;
+                },
+
+
+            },
+
+            methods: {
+                sayHello() {
+
+                    this.name = "Isaac"
+                },
+                changeSeason(selectedValue) {
+                    this.selectedSeason = selectedValue
+
+                },
+
+            },
+
+
+            beforeDestroyed: function() {
+                console.log("runs before app is destroyed")
+
+            },
+            destroyed: function() {
+                console.log("runs when app is destroyed")
+
+            },
+        })
+    </script>
+
+</body>
+
+
+</html>
